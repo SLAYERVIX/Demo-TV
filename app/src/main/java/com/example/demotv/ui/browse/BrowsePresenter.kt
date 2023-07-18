@@ -1,13 +1,14 @@
-package com.example.demotv
+package com.example.demotv.ui.browse
 
 import android.view.ViewGroup
 import androidx.leanback.widget.BaseCardView
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
+import com.example.demotv.R
 import com.example.domain.entity.Video
 
-class CardPresenter : Presenter() {
+class BrowsePresenter : Presenter() {
 
     override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
         val imageCardView = ImageCardView(parent?.context).apply {

@@ -1,4 +1,4 @@
-package com.example.demotv
+package com.example.demotv.ui.browse
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject
+class BrowseViewModel @Inject
 constructor(
     private val networkRepository: NetworkRepository
 ) : ViewModel() {

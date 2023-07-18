@@ -1,4 +1,4 @@
-package com.example.demotv
+package com.example.demotv.ui.browse
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -13,9 +13,11 @@ import androidx.leanback.widget.ListRow
 import androidx.leanback.widget.ListRowPresenter
 import androidx.leanback.widget.OnItemViewClickedListener
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.demotv.R
 import com.example.domain.entity.Video
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -23,7 +25,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class BrowseFragment : BrowseSupportFragment() {
     private lateinit var rowsAdapter: ArrayObjectAdapter
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: BrowseViewModel by viewModels()
 
     private val backgroundManager by lazy {
         BackgroundManager.getInstance(requireActivity()).apply {
@@ -45,8 +47,7 @@ class BrowseFragment : BrowseSupportFragment() {
 
         adapter = rowsAdapter
 
-
-        val listRowAdapter = ArrayObjectAdapter(CardPresenter())
+        val listRowAdapter = ArrayObjectAdapter(BrowsePresenter())
 
         lifecycleScope.launch {
             viewModel.popularVideos.collect { popularVideos ->
@@ -70,7 +71,8 @@ class BrowseFragment : BrowseSupportFragment() {
 
         onItemViewClickedListener =
             OnItemViewClickedListener { itemViewHolder, item, rowViewHolder, row ->
-
+                val video = item as Video
+                findNavController().navigate(BrowseFragmentDirections.actionMainFragmentToVideoPlayerFragment(video.video_files[1].link))
             }
 
         brandColor =
@@ -95,4 +97,5 @@ class BrowseFragment : BrowseSupportFragment() {
             }
         }
     }
+
 }

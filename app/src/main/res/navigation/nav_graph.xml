@@ -7,7 +7,24 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.demotv.BrowseFragment"
+        android:name="com.example.demotv.ui.browse.BrowseFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_browse" />
+        tools:layout="@layout/fragment_browse" >
+        <action
+            android:id="@+id/action_mainFragment_to_videoPlayerFragment"
+            app:destination="@id/videoPlayerFragment">
+            <argument
+                android:name="url"
+                app:argType="string" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/videoPlayerFragment"
+        android:name="com.example.demotv.ui.player.PlayerFragment"
+        android:label="fragment_video_player"
+        tools:layout="@layout/fragment_player" >
+        <argument
+            android:name="url"
+            app:argType="string" />
+    </fragment>
 </navigation>
