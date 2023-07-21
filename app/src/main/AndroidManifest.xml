@@ -25,7 +25,7 @@
         android:banner="@drawable/ic_launcher_foreground">
         <activity
             android:banner="@drawable/banner"
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
 
             <intent-filter>

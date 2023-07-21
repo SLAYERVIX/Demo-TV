@@ -1,7 +1,8 @@
-package com.example.demotv
+package com.example.demotv.ui
 
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
+import com.example.demotv.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -17,8 +17,9 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.data.Constants
 import com.example.demotv.R
-import com.example.domain.entity.Video
+import com.example.domain.entity.movie.Result
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -35,31 +36,45 @@ class BrowseFragment : BrowseSupportFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getPopularVideos()
+
+        rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
+        adapter = rowsAdapter
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setupUiElements()
+        loadData()
+        setDynamicBackground()
+    }
 
-        rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
-
-        adapter = rowsAdapter
-
-        val listRowAdapter = ArrayObjectAdapter(BrowsePresenter())
-
+    private fun loadData() {
         lifecycleScope.launch {
-            viewModel.popularVideos.collect { popularVideos ->
-                popularVideos?.let {
-                    listRowAdapter.addAll(0, it.videos)
-                    rowsAdapter.add(ListRow(HeaderItem(1, "Popular"), listRowAdapter))
+            viewModel.getGenres()
+            viewModel.genres.collect { genreResult ->
+                genreResult?.genres?.forEach { genre ->
+                    // Fetch movies for each genre one by one and wait for the result
+                    val movies = viewModel.getMovies(genre.id)
 
+                    // Create ArrayObjectAdapter for each genre
+                    val listRowAdapter = ArrayObjectAdapter(BrowsePresenter())
+
+                    // Add movies to the listRowAdapter
+                    movies?.results?.forEach {
+                        listRowAdapter.add(it)
+                    }
+
+                    // Add the row to the rowsAdapter
+                    rowsAdapter.add(
+                        ListRow(
+                            HeaderItem(genre.id.toLong(), genre.name),
+                            listRowAdapter
+                        )
+                    )
                 }
             }
         }
-
-        setDynamicBackground()
     }
 
     private fun setupUiElements() {
@@ -71,31 +86,36 @@ class BrowseFragment : BrowseSupportFragment() {
 
         onItemViewClickedListener =
             OnItemViewClickedListener { itemViewHolder, item, rowViewHolder, row ->
-                val video = item as Video
-                findNavController().navigate(BrowseFragmentDirections.actionMainFragmentToVideoPlayerFragment(video.video_files[1].link))
+                findNavController().navigate(
+                    BrowseFragmentDirections.actionMainFragmentToDetailsFragment(
+                        (item as Result)
+                    )
+                )
             }
+
 
         brandColor =
             ContextCompat.getColor(requireContext(), R.color.black) // Set header background color
-
-
     }
 
     private fun setDynamicBackground() {
         setOnItemViewSelectedListener { itemViewHolder, item, _, _ ->
             if (itemViewHolder?.view != null) {
-                val video = item as Video
-                Glide.with(requireContext()).load(video.image).into(object : CustomTarget<Drawable>() {
-                    override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                        backgroundManager.drawable = resource
-                    }
+                val video = item as Result
+                Glide.with(requireContext()).load(Constants.IMAGE_URL + video.backdrop_path)
+                    .into(object : CustomTarget<Drawable>() {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable>?
+                        ) {
+                            backgroundManager.drawable = resource
+                        }
 
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                        // You can do cleanup here if needed.
-                    }
-                })
+                        override fun onLoadCleared(placeholder: Drawable?) {
+                            // You can do cleanup here if needed.
+                        }
+                    })
             }
         }
     }
-
 }

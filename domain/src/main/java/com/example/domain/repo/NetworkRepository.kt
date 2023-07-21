@@ -1,8 +1,12 @@
 package com.example.domain.repo
 
-import com.example.domain.entity.PopularVideos
+import com.example.domain.entity.genre.GenreResponse
+import com.example.domain.entity.movie.MovieResponse
+import com.example.domain.entity.video.VideoResponse
 import retrofit2.Response
 
 interface NetworkRepository {
-    suspend fun getPopularVideos(videosNumber : String) : Response<PopularVideos>
+    suspend fun getGenres() : Response<GenreResponse>
+    suspend fun getMoviesByGenre(id : Int) : Response<MovieResponse>
+    suspend fun getVideos(id : Int) : Response<VideoResponse>
 }

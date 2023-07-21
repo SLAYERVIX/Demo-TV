@@ -5,8 +5,9 @@ import androidx.leanback.widget.BaseCardView
 import androidx.leanback.widget.ImageCardView
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
+import com.example.data.Constants
 import com.example.demotv.R
-import com.example.domain.entity.Video
+import com.example.domain.entity.movie.Result
 
 class BrowsePresenter : Presenter() {
 
@@ -28,13 +29,13 @@ class BrowsePresenter : Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
-        val video = item as Video
+       val movie = item as Result
 
         with(viewHolder?.view as ImageCardView) {
-            Glide.with(mainImageView.context).load(video.image).into(mainImageView)
+            Glide.with(mainImageView.context).load(Constants.IMAGE_URL + movie.poster_path).into(mainImageView)
 
-            titleText = video.user.name
-            contentText = video.duration.toString() +  " Minutes"
+            titleText = movie.title
+            contentText = movie.release_date
         }
     }
 

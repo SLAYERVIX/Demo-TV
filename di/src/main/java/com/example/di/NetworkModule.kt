@@ -1,7 +1,7 @@
 package com.example.di
 
-import com.example.data.remote.ApiService
-import com.example.data.remote.Constants
+import com.example.data.Constants
+import com.example.data.remote.MoviesApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +24,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiServiceInstance(retrofit: Retrofit) : ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun provideApiServiceInstance(retrofit: Retrofit) : MoviesApiService {
+        return retrofit.create(MoviesApiService::class.java)
     }
 }

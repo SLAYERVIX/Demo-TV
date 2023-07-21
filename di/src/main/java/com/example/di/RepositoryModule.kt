@@ -1,6 +1,6 @@
 package com.example.di
 
-import com.example.data.remote.ApiService
+import com.example.data.remote.MoviesApiService
 import com.example.data.repo.NetworkRepoImpl
 import com.example.domain.repo.NetworkRepository
 import dagger.Module
@@ -13,7 +13,7 @@ import dagger.hilt.components.SingletonComponent
 object RepositoryModule {
 
     @Provides
-    fun provideNetworkRepoInstance(apiService: ApiService) : NetworkRepository {
+    fun provideNetworkRepoInstance(apiService: MoviesApiService) : NetworkRepository {
         return NetworkRepoImpl(apiService)
     }
 }

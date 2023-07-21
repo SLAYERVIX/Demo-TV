@@ -11,11 +11,11 @@
         android:label="fragment_main"
         tools:layout="@layout/fragment_browse" >
         <action
-            android:id="@+id/action_mainFragment_to_videoPlayerFragment"
-            app:destination="@id/videoPlayerFragment">
+            android:id="@+id/action_mainFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment">
             <argument
-                android:name="url"
-                app:argType="string" />
+                android:name="movie"
+                app:argType="com.example.domain.entity.movie.Result" />
         </action>
     </fragment>
     <fragment
@@ -24,7 +24,29 @@
         android:label="fragment_video_player"
         tools:layout="@layout/fragment_player" >
         <argument
-            android:name="url"
+            android:name="key"
             app:argType="string" />
+        <argument
+            android:name="movie"
+            app:argType="com.example.domain.entity.movie.Result" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.demotv.ui.details.DetailsFragment"
+        android:label="fragment_details"
+        tools:layout="@layout/fragment_details" >
+        <argument
+            android:name="movie"
+            app:argType="com.example.domain.entity.movie.Result" />
+        <action
+            android:id="@+id/action_detailsFragment_to_videoPlayerFragment"
+            app:destination="@id/videoPlayerFragment">
+            <argument
+                android:name="key"
+                app:argType="string" />
+            <argument
+                android:name="movie"
+                app:argType="com.example.domain.entity.movie.Result" />
+        </action>
     </fragment>
 </navigation>
