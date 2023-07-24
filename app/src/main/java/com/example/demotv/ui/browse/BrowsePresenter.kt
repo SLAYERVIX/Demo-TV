@@ -22,7 +22,6 @@ class BrowsePresenter : Presenter() {
                 val posterHeight = parent?.resources?.getDimension(R.dimen.poster_height)?.toInt()
                 layoutParams = BaseCardView.LayoutParams(posterWidth!!, posterHeight!!)
             }
-
         }
 
         return ViewHolder(imageCardView)

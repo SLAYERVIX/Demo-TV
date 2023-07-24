@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.entity.genre.GenreResponse
 import com.example.domain.entity.movie.MovieResponse
+import com.example.domain.entity.now_playing.NowPlayingResponse
 import com.example.domain.repo.NetworkRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,9 +24,11 @@ constructor(
     private val _genres : MutableStateFlow<GenreResponse?> = MutableStateFlow(null)
     val genres : StateFlow<GenreResponse?> get() = _genres
 
-
     private val _movies : MutableStateFlow<MovieResponse?> = MutableStateFlow(null)
     val movie : StateFlow<MovieResponse?> get() = _movies
+
+    private val _nowPlaying : MutableStateFlow<NowPlayingResponse?> = MutableStateFlow(null)
+    val nowPlaying : StateFlow<NowPlayingResponse?> get() = _nowPlaying
 
     fun getGenres() = viewModelScope.launch(Dispatchers.IO) {
         val response = networkRepository.getGenres()
@@ -39,6 +42,16 @@ constructor(
 
     suspend fun getMovies(id: Int): MovieResponse? = withContext(Dispatchers.IO) {
         val response = networkRepository.getMoviesByGenre(id)
+        if (response.isSuccessful) {
+            response.body()
+        } else {
+            Log.d("rabbit", "getMovies: ${response.code()}")
+            null
+        }
+    }
+
+    suspend fun getNowPlaying(): NowPlayingResponse? = withContext(Dispatchers.IO) {
+        val response = networkRepository.getNowPlaying()
         if (response.isSuccessful) {
             response.body()
         } else {

@@ -25,7 +25,6 @@ class ControlGlue(
         super.onCreatePrimaryActions(primaryActionsAdapter)
         primaryActionsAdapter?.add(forwardAction)
         primaryActionsAdapter?.add(nextAction)
-
     }
 
     override fun onActionClicked(action: Action?) {
@@ -34,6 +33,12 @@ class ControlGlue(
             rewindAction -> playerAdapter.rewind()
             else -> super.onActionClicked(action)
         }
+
         onUpdateProgress()
+    }
+
+    fun setupVideoData(title : String, subtitle : String) {
+        this.title = title
+        this.subtitle = subtitle
     }
 }

@@ -3,6 +3,7 @@ package com.example.data.remote
 import com.example.data.Constants
 import com.example.domain.entity.genre.GenreResponse
 import com.example.domain.entity.movie.MovieResponse
+import com.example.domain.entity.now_playing.NowPlayingResponse
 import com.example.domain.entity.video.VideoResponse
 import retrofit2.Response
 import retrofit2.http.GET
@@ -29,4 +30,9 @@ interface MoviesApiService {
         @Path("movie_id") movieId: Int,
         @Header("Authorization") apiKey: String = Constants.TOKEN,
     ): Response<VideoResponse>
+
+    @GET("movie/now_playing")
+    suspend fun getNowPlaying(
+        @Header("Authorization") apiKey: String = Constants.TOKEN,
+    ): Response<NowPlayingResponse>
 }

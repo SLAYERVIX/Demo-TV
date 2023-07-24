@@ -28,7 +28,6 @@ class DetailsFragment : DetailsSupportFragment() {
     private val args: DetailsFragmentArgs by navArgs()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,6 +54,7 @@ class DetailsFragment : DetailsSupportFragment() {
             imageDrawable = res?.getDrawable(R.drawable.player)
             addAction(Action(1, "Watch Trailer"))
 
+
             setOnItemViewClickedListener { itemViewHolder, item, rowViewHolder, row ->
                 if (item is Action) {
                     lifecycleScope.launch {
@@ -73,10 +73,10 @@ class DetailsFragment : DetailsSupportFragment() {
                 }
             }
 
+
         }
 
         rowsAdapter.add(detailsOverview)
-
         adapter = rowsAdapter
     }
 }

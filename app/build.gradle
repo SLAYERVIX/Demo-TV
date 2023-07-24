@@ -74,5 +74,7 @@ dependencies {
 
     implementation 'com.github.maxrave-dev:kotlin-youtubeExtractor:0.0.6'
 
-
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.19.0'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.19.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.19.0'
 }

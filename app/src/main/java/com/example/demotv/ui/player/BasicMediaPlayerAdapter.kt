@@ -17,6 +17,7 @@ class BasicMediaPlayerAdapter(private val context: Context) : MediaPlayerAdapter
         super.next()
     }
 
+
     override fun previous() {
         super.previous()
     }
